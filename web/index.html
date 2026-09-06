@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff9f2">
+  <meta name="description" content="ClearMind is a gentle, private wellness space for check-ins, calming tools, journaling, and supportive guidance.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='20' fill='%23354052'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-family='Arial' font-size='22' font-weight='700' fill='%23fff9f2'%3Ecm%3C/text%3E%3C/svg%3E">
+  <title>ClearMind | Gentle wellness, one step at a time</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#today" data-view="today" aria-label="ClearMind home">
+        <span class="brand-mark">cm</span>
+        <span><strong>ClearMind</strong><small>your softer space</small></span>
+      </a>
+      <nav class="primary-nav" aria-label="Main navigation">
+        <button class="nav-item active" data-view="today"><span>◌</span> Today</button>
+        <button class="nav-item" data-view="chat"><span>◒</span> Companion</button>
+        <button class="nav-item" data-view="calm"><span>◉</span> Calm tools</button>
+        <button class="nav-item" data-view="journal"><span>✎</span> Journal</button>
+      </nav>
+      <div class="sidebar-note">
+        <span class="sun-dot"></span>
+        <p>Small steps count. There is no perfect way to feel.</p>
+      </div>
+      <button class="quick-calm side-quick" data-action="quick-calm"><span>⚡</span> Quick Calm</button>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow" id="date-label">Sunday, September 6</p>
+          <h1 id="greeting">Good morning, friend.</h1>
+        </div>
+        <div class="header-actions">
+          <button class="icon-button" data-action="open-resources" aria-label="Open resources" title="Resources">?</button>
+          <button class="icon-button install-button hidden" data-action="install-app" aria-label="Install ClearMind" title="Install ClearMind">＋</button>
+          <div class="avatar" aria-hidden="true">CM</div>
+        </div>
+      </header>
+
+      <section class="view active-view" id="view-today" aria-labelledby="today-title">
+        <div class="welcome-grid">
+          <div class="welcome-card">
+            <div class="welcome-copy">
+              <span class="soft-chip">A gentle check-in</span>
+              <h2 id="today-title">How are you arriving today?</h2>
+              <p>Your answer helps shape a small recommendation for this moment. Nothing is scored.</p>
+            </div>
+            <div class="mood-picker" role="group" aria-label="Choose your mood">
+              <button class="mood-button" data-mood="great"><span>Bright</span><b>:) </b></button>
+              <button class="mood-button" data-mood="okay"><span>Okay</span><b>~</b></button>
+              <button class="mood-button" data-mood="low"><span>Low</span><b>:(</b></button>
+              <button class="mood-button" data-mood="anxious"><span>Wired</span><b>!!</b></button>
+              <button class="mood-button" data-mood="tired"><span>Tired</span><b>zz</b></button>
+            </div>
+            <div class="checkin-followup hidden" id="checkin-followup">
+              <label for="energy-range">How much energy do you have?</label>
+              <input id="energy-range" type="range" min="1" max="5" value="3">
+              <button class="primary-button" data-action="save-checkin">Save check-in</button>
+            </div>
+          </div>
+          <div class="breathing-orb-card" aria-label="Quick calm breathing">
+            <div class="breath-orb"><span>inhale</span></div>
+            <div><span class="soft-chip blue-chip">2 minute reset</span><h3>Make a little room.</h3><p>Follow the circle when your thoughts feel loud.</p></div>
+            <button class="text-button" data-action="quick-calm">Start breathing <span>→</span></button>
+          </div>
+        </div>
+
+        <div class="section-heading"><div><p class="eyebrow">For this moment</p><h2>Your gentle plan</h2></div><button class="text-button" data-view="calm">See all tools <span>→</span></button></div>
+        <div class="recommendation-card" id="recommendation-card"><div class="recommendation-icon">✦</div><div><p class="eyebrow">A small suggestion</p><h3 id="recommendation-title">Start with how you feel</h3><p id="recommendation-text">Choose a mood above and ClearMind will suggest a calm, practical next step.</p></div><button class="round-arrow" data-action="use-recommendation" aria-label="Use recommendation">→</button></div>
+
+        <div class="dashboard-grid">
+          <section class="panel goals-panel"><div class="panel-heading"><div><p class="eyebrow">Today</p><h3>Gentle goals</h3></div><span class="progress-ring" id="goal-ring">0%</span></div><form class="goal-form" id="goal-form"><input id="goal-input" placeholder="Add one small goal..." maxlength="80"><button class="primary-button small-button" type="submit">Add</button></form><div id="goal-list" class="goal-list"></div><p class="empty-state" id="goal-empty">A goal can be as small as one mindful breath.</p></section>
+          <section class="panel progress-panel"><div class="panel-heading"><div><p class="eyebrow">Your rhythm</p><h3>Progress, gently</h3></div><span class="streak-badge">✦ <b id="streak-value">0</b> days</span></div><div class="stats-row"><div><strong id="checkin-count">0</strong><span>check-ins</span></div><div><strong id="goal-count">0</strong><span>goals done</span></div><div><strong id="tool-count">0</strong><span>calm tools</span></div></div><div class="week-dots" id="week-dots" aria-label="Last seven days"></div><p class="muted-copy">Consistency is an invitation, not a test.</p></section>
+        </div>
+
+        <section class="support-strip"><div><span class="soft-chip peach-chip">Support</span><h3>You deserve real support, too.</h3><p>ClearMind offers general wellness guidance, not diagnosis or treatment. Reach out to a trusted person or qualified professional when you need more care.</p></div><button class="secondary-button" data-action="open-resources">Read resources</button></section>
+      </section>
+
+      <section class="view" id="view-chat" aria-labelledby="chat-title"><div class="page-intro"><span class="soft-chip lavender-chip">Private, supportive space</span><h2 id="chat-title">Talk it through</h2><p>Share what is on your mind and get a calm, practical response. ClearMind is not a psychologist or doctor, and it cannot provide emergency care.</p></div><div class="chat-layout"><div class="chat-panel"><div class="chat-messages" id="chat-messages" aria-live="polite"></div><form class="chat-form" id="chat-form"><input id="chat-input" autocomplete="off" placeholder="What is on your mind?" maxlength="500"><button class="primary-button" type="submit">Send</button></form></div><aside class="chat-aside"><h3>Try asking</h3><button class="suggestion" data-prompt="I feel anxious and cannot slow my thoughts down.">I feel anxious</button><button class="suggestion" data-prompt="I am having a hard day and feel low.">I feel low</button><button class="suggestion" data-prompt="I feel tired and overwhelmed.">I feel overwhelmed</button><div class="safety-note"><strong>Need urgent help?</strong><p>If you may hurt yourself or someone else, contact local emergency services or a crisis line now, and stay with someone you trust.</p></div></aside></div></section>
+
+      <section class="view" id="view-calm" aria-labelledby="calm-title"><div class="page-intro"><span class="soft-chip yellow-chip">Tools for your nervous system</span><h2 id="calm-title">Find your calm</h2><p>Choose what fits the moment. You can stop any practice whenever you need.</p></div><div class="tool-grid"><article class="tool-card featured-tool"><div class="tool-visual breath-visual"><span>4 · 4 · 4 · 4</span></div><div><span class="tool-tag">Breathing</span><h3>Box breathing</h3><p>Steady your breath with equal, comfortable pauses.</p><button class="primary-button" data-exercise="box">Start 2 minutes</button></div></article><article class="tool-card"><div class="tool-symbol">5–4–3–2–1</div><span class="tool-tag">Grounding</span><h3>Come back to now</h3><p>Notice your senses and reconnect with the room around you.</p><button class="secondary-button" data-exercise="grounding">Begin grounding</button></article><article class="tool-card"><div class="tool-symbol">↕</div><span class="tool-tag">Movement</span><h3>Gentle stretch</h3><p>Release common tension in your shoulders, jaw, and neck.</p><button class="secondary-button" data-exercise="stretch">Start stretch</button></article><article class="tool-card"><div class="tool-symbol">~</div><span class="tool-tag">Mindfulness</span><h3>Body scan</h3><p>Soften one area at a time with a three-minute guided reset.</p><button class="secondary-button" data-exercise="relax">Begin body scan</button></article></div><div class="section-heading music-heading"><div><p class="eyebrow">Soundscapes</p><h2>Peaceful playlists</h2></div><span class="muted-copy">Tap to play a soft ambient loop</span></div><div class="music-grid"><button class="music-card rain" data-sound="rain"><span>rain</span><strong>Rainy focus</strong><small>steady · 20 min</small><i>▶</i></button><button class="music-card ocean" data-sound="ocean"><span>waves</span><strong>Ocean sleep</strong><small>slow · 30 min</small><i>▶</i></button><button class="music-card night" data-sound="night"><span>night</span><strong>Night meditation</strong><small>deep · 15 min</small><i>▶</i></button><button class="music-card study" data-sound="study"><span>soft tones</span><strong>Soft study</strong><small>focused · 25 min</small><i>▶</i></button></div><p class="now-playing hidden" id="now-playing"></p></section>
+
+      <section class="view" id="view-journal" aria-labelledby="journal-title"><div class="page-intro"><span class="soft-chip peach-chip">A private place to land</span><h2 id="journal-title">Your journal</h2><p>Write without editing yourself. Your entries stay in this browser on this device.</p></div><div class="journal-layout"><form class="journal-editor panel" id="journal-form"><label for="journal-title-input">Title</label><input id="journal-title-input" placeholder="A thought, a moment, a win..." maxlength="80"><label for="journal-content">What would feel good to put down?</label><textarea id="journal-content" rows="10" placeholder="Let the words arrive slowly..."></textarea><div class="editor-actions"><button class="primary-button" type="submit">Save entry</button><button class="text-button" type="button" data-action="journal-prompt">Give me a prompt <span>→</span></button></div></form><section class="entries panel"><div class="panel-heading"><div><p class="eyebrow">Your reflections</p><h3>Recent entries</h3></div><span id="entry-count" class="muted-copy">0 entries</span></div><div id="entry-list"></div><p class="empty-state" id="entry-empty">Your first entry can be just one sentence.</p></section></div></section>
+    </main>
+  </div>
+
+  <div class="modal hidden" id="exercise-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal-card"><button class="modal-close" data-action="close-modal" aria-label="Close">×</button><span class="soft-chip blue-chip" id="modal-tag">Guided practice</span><h2 id="modal-title">Box breathing</h2><p id="modal-copy">Follow the prompts at your own pace.</p><div class="modal-timer" id="modal-timer">Ready</div><div class="modal-progress"><span id="modal-progress-bar"></span></div><button class="primary-button" id="modal-start" data-action="start-exercise">Start practice</button></div></div>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>

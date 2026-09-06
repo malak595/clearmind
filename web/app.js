@@ -128,14 +128,18 @@ function addMessage(text, type) { const node = document.createElement('div'); no
 function botReply(text) {
   const lower = text.toLowerCase();
   if (/(suicide|suicidal|kill myself|hurt myself|self harm|end my life|want to die)/.test(lower)) return 'I am really sorry you are carrying this. Please do not stay alone: contact local emergency services or a crisis line now, tell someone you trust exactly what is happening, and move away from anything you could use to hurt yourself. I am not a psychologist or doctor and cannot provide emergency help.';
-  if (/(anxious|anxiety|panic|worried|stress|nervous|overwhelm)/.test(lower)) return 'That sounds like a lot to hold. Try placing both feet on the floor and taking four breaths with a longer exhale. Then choose one thing you can control in the next ten minutes. Would a grounding exercise or a quiet chat feel better?';
-  if (/(sad|low|depress|lonely|cry|hurt)/.test(lower)) return 'I hear how heavy this feels. You do not have to make the whole day better. Could you offer yourself one small comfort and tell a trusted person you are having a hard time? I can also guide a gentle reset.';
-  if (/(tired|exhaust|sleep|rest)/.test(lower)) return 'Your body may be asking for care, not criticism. Drink some water, soften the lights, and choose either a short stretch or the Ocean Sleep soundscape. Rest does not need to be earned.';
-  if (/(angry|mad|furious|frustrat)/.test(lower)) return 'Anger can be useful information. Before acting, create a little space: unclench your hands, breathe out slowly, and name what boundary or need may be underneath it.';
+  if (/(anxious|anxiety|panic|worried|stress|nervous|overwhelm)/.test(lower)) return 'That sounds like a lot to hold. Try placing both feet on the floor and taking four breaths with a longer exhale. Then choose one thing you can control in the next ten minutes. Would grounding, breathing, or talking through the worry help most?';
+  if (/(sad|low|depress|lonely|cry|hurt)/.test(lower)) return 'I hear how heavy this feels. You do not have to make the whole day better. Could you offer yourself one small comfort, like water, fresh air, or a message to someone safe? What part of today has felt hardest?';
+  if (/(tired|exhaust|sleep|rest)/.test(lower)) return 'Your body may be asking for care, not criticism. Drink some water, soften the lights, and choose either a short stretch or the Ocean Sleep soundscape. Is your tiredness more physical, emotional, or both?';
+  if (/(angry|mad|furious|frustr)/.test(lower)) return 'Anger can be useful information. Before acting, create a little space: unclench your hands, breathe out slowly, and name what boundary or need may be underneath it. Do you want help calming your body or sorting out what happened?';
+  if (/(exercise|breath|ground|calm|relax|tool)/.test(lower)) return 'For a quick reset, I suggest box breathing if your thoughts feel fast, 5–4–3–2–1 grounding if you feel detached, or a body scan if you need rest. Open Calm Tools and choose the one that feels easiest, not the one that sounds perfect.';
+  if (/(thank|thanks)/.test(lower)) return 'You are welcome. I am glad you gave yourself a moment here. What would feel supportive as your next small step?';
   if (/(hello|hi|hey)/.test(lower)) return 'Hello. I am glad you are here. What has your attention today?';
   return 'Thank you for sharing that with me. I cannot diagnose or replace a psychologist or doctor, but I can help you think through a gentle next step. What part feels most important right now?';
 }
-function sendChat(event) { event.preventDefault(); const input = $('#chat-input'); const text = input.value.trim(); if (!text) return; addMessage(text, 'user'); input.value = ''; setTimeout(() => addMessage(botReply(text), 'bot'), 280); }
+function sendChat(event) { event.preventDefault(); const input = $('#chat-input'); const text = input.value.trim(); if (!text) return; addMessage(text, 'user'); input.value = ''; updateChatCount(); $('#typing-indicator').classList.remove('hidden'); input.disabled = true; setTimeout(() => { $('#typing-indicator').classList.add('hidden'); input.disabled = false; addMessage(botReply(text), 'bot'); input.focus(); }, 500); }
+function clearChat() { $('#chat-messages').innerHTML = ''; initChat(); showToast('Conversation cleared on this device.'); }
+function updateChatCount() { $('#chat-count').textContent = `${$('#chat-input').value.length} / 500`; }
 function initChat() { if (!$('#chat-messages').children.length) addMessage('Hi, I am ClearMind. I can offer supportive wellness ideas, but I am not a psychologist or doctor. How are you feeling today?', 'bot'); }
 
 const exerciseDetails = {
@@ -248,7 +252,7 @@ function bindEvents() {
   $$('.music-card').forEach((card) => card.addEventListener('click', () => playSound(card.dataset.sound)));
   $$('[data-action="quick-calm"]').forEach((button) => button.addEventListener('click', quickCalm));
   $$('[data-action="open-resources"]').forEach((button) => button.addEventListener('click', openResources));
-  $('[data-action="save-checkin"]').addEventListener('click', saveCheckin); $('[data-action="use-recommendation"]').addEventListener('click', useRecommendation); $('[data-action="close-modal"]').addEventListener('click', closeModal); $('[data-action="start-exercise"]').addEventListener('click', startExercise); $('[data-action="journal-prompt"]').addEventListener('click', journalPrompt); $('[data-action="install-app"]').addEventListener('click', installApp);
+  $('[data-action="save-checkin"]').addEventListener('click', saveCheckin); $('[data-action="use-recommendation"]').addEventListener('click', useRecommendation); $('[data-action="close-modal"]').addEventListener('click', closeModal); $('[data-action="start-exercise"]').addEventListener('click', startExercise); $('[data-action="journal-prompt"]').addEventListener('click', journalPrompt); $('[data-action="install-app"]').addEventListener('click', installApp); $('[data-action="clear-chat"]').addEventListener('click', clearChat); $('#chat-input').addEventListener('input', updateChatCount);
   $('#goal-form').addEventListener('submit', addGoal); $('#goal-list').addEventListener('click', (event) => { const button = event.target.closest('[data-goal]'); if (button) toggleGoal(button.dataset.goal); }); $('#chat-form').addEventListener('submit', sendChat); $('#journal-form').addEventListener('submit', saveJournal);
   window.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeModal(); });
 }
